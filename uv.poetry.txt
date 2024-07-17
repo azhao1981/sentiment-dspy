@@ -2,3 +2,5 @@
 python-dotenv>=1.0.1
 poetry
 ipykernel
+jupyter
+ipywidgets

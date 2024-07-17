@@ -7,7 +7,26 @@ pip install dspy-ai
 uv pip install -r .\requrements.txt
 ```
 
+## 性能
+
+## 需要支持的语言
+
+印尼语	印度尼西亚
+越南语	越南
+马来语	马来西亚
+菲律宾	菲律宾
+泰语	泰国
+柬埔寨语	柬埔寨
+英语	新加坡
+阿拉伯	沙特阿拉伯、阿联酋、埃及
+西班牙语	墨西哥
+葡萄牙语	巴西
+
 ## start
+
+
+[创建自己的数据集](https://huggingface.co/learn/nlp-course/zh-CN/chapter5/5)
+
 ## env
 
 uv + poetry

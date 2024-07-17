@@ -3,7 +3,6 @@
   "python.testing.pytestArgs": [
     "tests","-s"
   ],
-  "terminal.integrated.defaultProfile.windows": "Windows PowerShell" ,
   "python.testing.unittestEnabled": false,
   "python.testing.pytestEnabled": true,
   "python.testing.autoTestDiscoverOnSaveEnabled": false,
