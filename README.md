@@ -1,5 +1,13 @@
-# py-template
+# sentiment-dspy
 
+## dspy
+
+```bash
+pip install dspy-ai
+uv pip install -r .\requrements.txt
+```
+
+## start
 ## env
 
 uv + poetry

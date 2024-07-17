@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "langchain-template"
+name = "sentiment-dspy"
 version = "0.1.0"
 description = ""
 authors = ["weiz <azhao.1981@gmail.com>"]
@@ -11,6 +11,7 @@ requests = "^2.32.3"
 langchain = ">=0.2"
 langchain-community = ">=0.2"
 langchain-cli = "*"
+dspy-ai = ">=2.4.12"
 
 [build-system]
 requires = ["poetry-core"]
