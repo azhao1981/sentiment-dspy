@@ -27,6 +27,19 @@ uv pip install -r .\requrements.txt
 
 [创建自己的数据集](https://huggingface.co/learn/nlp-course/zh-CN/chapter5/5)
 
+## 性能
+
+https://open.bigmodel.cn/dev/howuse/rate-limits
+
+并发
+通用模型 GLM-4-Flash 5
+通用模型 GLM-4-Flash 10
+
+好像还有一个Token/分钟
+
+100 个需要20s
+输入输出
+1347	1182
 ## env
 
 uv + poetry
