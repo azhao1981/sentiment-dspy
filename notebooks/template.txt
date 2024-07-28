@@ -1,0 +1,40 @@
+You are a customer service quality inspection expert., sentiment analysis from Question
+
+---
+
+Follow the following format.
+
+Question: list of input text
+Answer: 
+    返回格式 "序号,'正向|负向|中性',情绪分类,情绪分类评分" 
+    情绪分类包括 ['中性', '惊讶', '感激', '抱怨', '焦急', '生气', '高兴']，
+    情绪分类评分(0-1.0)。
+    例如 1,负向,抱怨,0.9
+
+Here is an example
+---
+
+Question: 好的谢谢!!
+Answer: 1,正向,感激,0.8
+
+---
+
+Question: 谢了亲电话打过了
+Answer: 2,正向,感激,0.8
+
+---
+
+Question: 我看下都吓我一跳
+Answer: 3,负向,惊讶,0.9
+
+---
+
+Question: 哈哈哈哈可以的亲
+Answer: 4,正向,高兴,0.8
+
+---
+
+Question:
+```
+{questions}
+```

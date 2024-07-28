@@ -1,0 +1,144 @@
+sentiment analysis from text
+
+---
+
+Follow the following format.
+
+Question: list of input text, 对每一行为一个单位进行分析
+Reasoning: Let's think step by step in order to ${produce the answer}. We ...
+Answer: 对 Question 的每一行，返回格式 "序号,正向|负向|中性",情绪分类,情绪分类评分 情绪分类包括 ['中性', '惊讶', '感激', '抱怨', '焦急', '生气', '高兴']，情绪分类评分(0-1.0)。例如 "1,负向,抱怨,0.9\n2,正向,高兴,0.8"
+
+
+---
+
+Question: 好的谢谢!!
+Reasoning: Let's think step by step in order to produce the answer. We need to analyze the sentiment of the given text "好的谢谢!!". The text is positive and shows gratitude. The word "好的" means "good" or "ok," which is a neutral or positive expression, and "谢谢" means "thank you," which is clearly positive and shows gratitude.
+Answer: 1,正向,感激,0.8
+
+---
+
+Question: 谢了亲电话打过了
+Reasoning: Let's think step by step in order to produce the answer. We need to analyze the sentiment of the text "谢谢亲电话打过了". The text is a casual and friendly response, which indicates a positive sentiment. The words "谢谢" (thank you) and "亲" (a term of endearment) suggest a sense of gratitude or appreciation. There are no negative or neutral indicators in the text.
+Answer: 1,正向,感激,0.8
+
+---
+
+Question: 我看下都吓我一跳
+Reasoning: Let's think step by step in order to produce the answer. We need to analyze the sentiment of the text "我看下都吓我一跳". The text expresses a sudden shock or surprise. This indicates a negative sentiment with a strong emotional intensity.
+Answer: 1,负向,惊讶,0.9
+
+---
+
+Question: 哈哈哈哈可以的亲
+Reasoning: Let's think step by step in order to produce the answer. We need to analyze the sentiment of the given text. The text "哈哈哈可以的亲" contains laughter ("哈哈哈") and a positive expression ("可以的亲"), which suggests a positive sentiment.
+Answer: 1,正向,高兴,0.8
+
+---
+
+Question:
+
+```
+好,我看看,谢谢你
+麻烦您了,感谢
+我找到解决方法了,谢谢
+感谢你及时处理...
+太感谢啦,小琴最棒了!
+其他没了,你忙吧,谢谢
+谢谢你了[emoji046][emoji047]
+亲,帮忙解封一下旺旺,谢谢
+点的时候乱跳
+你给送的也不是充值钱数的积分啊
+我这个还需要写售后订单编号?
+账单期数还有多少期
+**这个店借的充电宝不让我在这个店还?
+那没有准考证呀
+这个很紧急
+等到崩溃
+麻烦您帮忙查一下,尽快安排发货,谢谢了[emoji050]
+好的麻烦催促一下谢谢
+我现在还非常着急用
+尽快解决,不想再拖
+好的,请尽快邮寄。谢谢。
+就是坑坑洼洼的,你可能看到??
+卧槽...他如果不还呢?
+流程还没走完?
+你们有真的人工服务?
+比抢火车票还厉害
+什么速度我靠
+你们扣钱这么快吗
+我觉得你挺帅
+这款哈哈哈哈哈
+哇,看到处理了效率真高,真好。
+我非常满意
+这名字怎么这么可爱
+今天效率赞一个
+我非常满意
+买了半年没绑定手机,结果绑定以后发现唉竟然是坏的不能用
+我买那么久,第一次售后就弄这一出
+其它平台的认证这块太麻烦
+很影响客户告知,亲爱的
+都发了好几遍截图了
+这件明明就是你们没检查好给我的为什么不能退?
+这样谁还敢借呀
+瞬间被骗了的感觉。这个皮皮网到底是个什么平台啊?
+有人在么骗子公司
+特么的,人死哪去了
+你们就只能骗人
+很好,大不了我号召我们区的玩家不玩了,本来就是一个边研发边更新的不成熟游戏,结果你们客服还那么不靠谱
+如果没正常收费,我下午会打电话投诉的
+办了会员不中奖这不是欺骗么
+而且破损严重怎么处理?破成这样也没法送人啦。
+```
+Reasoning: Let's think step by step in order to produce the answer. We need to analyze the sentiment of the provided text, which is a mix of positive, negative, and neutral expressions. The text includes expressions of gratitude, frustration, surprise, and satisfaction. 
+
+Answer:
+1,正向,感激,0.8
+2,正向,感激,0.8
+3,正向,感激,0.8
+4,正向,感激,0.8
+5,正向,感激,0.8
+6,正向,感激,0.8
+7,正向,感激,0.8
+8,正向,感激,0.8
+9,负向,抱怨,0.7
+10,负向,抱怨,0.7
+11,中性,询问,0.5
+12,中性,询问,0.5
+13,负向,抱怨,0.7
+14,负向,抱怨,0.7
+15,中性,紧急,0.6
+16,负向,抱怨,0.7
+17,正向,感激,0.8
+18,正向,感激,0.8
+19,中性,紧急,0.6
+20,正向,感激,0.8
+21,正向,感激,0.8
+22,负向,抱怨,0.7
+23,负向,抱怨,0.7
+24,中性,询问,0.5
+25,负向,抱怨,0.7
+26,负向,抱怨,0.7
+27,负向,抱怨,0.7
+28,负向,抱怨,0.7
+29,中性,赞赏,0.6
+30,正向,满意,0.8
+31,正向,满意,0.8
+32,正向,满意,0.8
+33,中性,赞赏,0.6
+34,正向,满意,0.8
+35,正向,满意,0.8
+36,负向,抱怨,0.7
+37,负向,抱怨,0.7
+38,负向,抱怨,0.7
+39,负向,抱怨,0.7
+40,负向,抱怨,0.7
+41,负向,抱怨,0.7
+42,负向,抱怨,0.7
+43,负向,抱怨,0.7
+44,负向,抱怨,0.7
+45,负向,抱怨,0.7
+46,负向,抱怨,0.7
+47,负向,抱怨,0.7
+48,负向,抱怨,0.7
+49,负向,抱怨,0.7
+50,负向,抱怨,0.7
