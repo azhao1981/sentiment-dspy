@@ -16,6 +16,7 @@
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff"
   },
+  "terminal.integrated.defaultProfile.windows": "Windows PowerShell",
   "CodeGPT.apiKey": "CodeGPT Plus Beta",
   "Codegeex.Chat.LanguagePreference": "中文"
 }

@@ -1,5 +1,3 @@
-
-
 import os
 from dotenv import find_dotenv, load_dotenv
 from langchain.prompts import PromptTemplate
@@ -11,40 +9,47 @@ load_dotenv(find_dotenv(), override=True)
 api_key = os.getenv("ZHIPUAI_API_KEY")
 model_name = "glm-4-flash"
 
+
 class Analysis(BaseModel):
     messages: list[str]
     template: str = ""
     api_key: str = "29cf286465d10e939d3ec7c4786ab076.7OCmqNDeGcyE9pn8"
     base_url: str = "https://open.bigmodel.cn/api/paas/v4"
     model_name: str = "glm-4-flash"
+    template_path: str = ".\\template.txt"
 
     def msg2context(self):
         context = ""
         for idx, message in enumerate(self.messages):
             context += str(idx) + ": " + message + "\n"
         return context
-    
-    def load_template_from_file(self, filepath=".\\notebooks\\template.txt"):
-        with open(filepath, 'r', encoding='utf-8') as file:
+
+    def load_template_from_file(self):
+        with open(self.template_path, "r", encoding="utf-8") as file:
             self.template = file.read()
         return self.template
-    
+
     def get_response(self, prompt):
-        llm = ChatOpenAI( api_key=self.api_key, base_url=self.base_url, model=self.model_name)
+        llm = ChatOpenAI(
+            api_key=self.api_key, base_url=self.base_url, model=self.model_name
+        )
         response = llm.invoke(prompt)
         return response
 
     def template2context(self):
         self.load_template_from_file()
-        prompt_template = PromptTemplate(input_variables=["questions"], template=self.template)
+        prompt_template = PromptTemplate(
+            input_variables=["questions"], template=self.template
+        )
         questions = self.msg2context()
-        return prompt_template.format(questions = questions)
-    
+        return prompt_template.format(questions=questions)
+
     def do(self):
         content = self.template2context()
         print(content)
         response = self.get_response(content)
         return response
+
 
 if __name__ == "__main__":
     txt = """流程还没走完?

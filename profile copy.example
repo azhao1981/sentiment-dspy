@@ -1,0 +1,3 @@
+if (Test-Path .\env\Scripts\Activate.ps1) {
+    & D:\dev\py-venv\qa\Scripts\Activate.ps1
+}

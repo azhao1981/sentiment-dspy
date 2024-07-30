@@ -1,6 +1,7 @@
 # this project
 .*
 local_cache
+profile.ps1
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
