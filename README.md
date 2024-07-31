@@ -40,6 +40,30 @@ https://open.bigmodel.cn/dev/howuse/rate-limits
 100 个需要20s
 输入输出
 1347	1182
+## 原始数据来源
+
+```python
+dict_old_cat = {"neutral":"中性", "pessimistic":"负面", "optimistic":"正面"}
+dict_old_sub_cat = {"中性":"中性", "生气":"负面", "抱怨":"正面", "感激":"正面", "高兴":"正面", "惊讶":"正面", "焦急":"负面"}
+
+["pessimistic", "optimistic", "neutral"]
+
+情绪子分类包括 ['中性', '惊讶', '感激', '抱怨', '焦急', '生气', '高兴']
+情绪子分类包括 ['neutral', 'surprised', 'thankful', 'complaining', 'anxious', 'angry', 'happy']
+
+# liubin/tencent/tencent_get_sentiment.py
+悲观的 pessimistic
+乐观的 optimistic
+中性 neutral
+
+抱怨 complaining
+生气 angry
+高兴 happy
+感激的，感谢的 thankful
+var MainCat = []string{"pessimistic", "optimistic", "neutral"}
+var SubCat = []string{"complaining", "angry", "happy", "thankful"}
+```
+
 ## env
 
 uv + poetry

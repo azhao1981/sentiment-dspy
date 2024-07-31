@@ -1,27 +1,29 @@
 import os
+import random
 from dotenv import find_dotenv, load_dotenv
 from langchain.prompts import PromptTemplate
-from pydantic import BaseModel
+from pydantic import BaseModel, SkipValidation
 from langchain_openai import ChatOpenAI
+from typing import Any, List
 
 load_dotenv(find_dotenv(), override=True)
 
 api_key = os.getenv("ZHIPUAI_API_KEY")
-model_name = "glm-4-flash"
+base_url = os.getenv("ZHIPUAI_BASE_URL")
 
 
 class Analysis(BaseModel):
-    messages: list[str]
+    messages: List[str]
     template: str = ""
-    api_key: str = "29cf286465d10e939d3ec7c4786ab076.7OCmqNDeGcyE9pn8"
-    base_url: str = "https://open.bigmodel.cn/api/paas/v4"
-    model_name: str = "glm-4-flash"
+    api_key: str = api_key
+    base_url: str = base_url
+    modelname: str = "glm-4-flash"
     template_path: str = ".\\template.txt"
 
     def msg2context(self):
         context = ""
         for idx, message in enumerate(self.messages):
-            context += str(idx) + ": " + message + "\n"
+            context += str(idx + 1) + ": " + message + "\n"
         return context
 
     def load_template_from_file(self):
@@ -31,7 +33,7 @@ class Analysis(BaseModel):
 
     def get_response(self, prompt):
         llm = ChatOpenAI(
-            api_key=self.api_key, base_url=self.base_url, model=self.model_name
+            api_key=self.api_key, base_url=self.base_url, model=self.modelname
         )
         response = llm.invoke(prompt)
         return response
@@ -49,6 +51,118 @@ class Analysis(BaseModel):
         print(content)
         response = self.get_response(content)
         return response
+
+
+class LangCover(BaseModel):
+    en: List[Any] = []
+    cn: List[Any] = []
+    mapping: dict = {}
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        self.mapping = self.create_mapping()
+
+    def to_en(self, text):
+        return self.mapping["cn_to_en"].get(text)
+
+    def to_cn(self, text):
+        return self.mapping["en_to_cn"].get(text)
+
+    def create_mapping(self):
+        en_to_cn = dict(zip(self.en, self.cn))
+        cn_to_en = dict(zip(self.cn, self.en))
+        return {"en_to_cn": en_to_cn, "cn_to_en": cn_to_en}
+
+
+class Evaluate(BaseModel):
+    data_set: List[Any]
+    eval_set: List[Any] = []
+    analyer: Analysis = None
+    respone: Any = ""
+    columns: List[Any] = ["label", "text", "pred_label", "main", "score"]
+    random: bool = False
+    main_cover: LangCover = LangCover(
+        en=["pessimistic", "optimistic", "neutral"],
+        cn=["负面", "正面", "中性"],
+    )
+    label_cover: LangCover = LangCover(
+        en=[
+            "neutral",
+            "surprised",
+            "thankful",
+            "complaining",
+            "urgent",
+            "anxious",
+            "angry",
+            "happy",
+        ],
+        cn=["中性", "惊讶", "感激", "抱怨", "焦急", "焦急", "生气", "高兴"],
+    )
+
+    class Config:
+        arbitrary_types_allowed = True
+
+    def do(self):
+        self.format_dataset()
+        messages = [x.get("text") for x in self.data_set]
+        self.analyer = Analysis(messages=messages)
+        self.respone = self.analyer.do()
+        return self.clear_answer()
+
+    def is_fullcolumns(self):
+        if len(self.columns) != 5:
+            return False
+        first_element = self.data_set[0] if self.data_set else {}
+        return all(column in first_element for column in self.columns)
+
+    def format_dataset(self):
+        if self.random:
+            random.shuffle(self.data_set)
+        if self.is_fullcolumns():
+            return
+        for sample in self.data_set:
+            sample["label"] = sample.get("label", "")
+            sample["text"] = sample.get("text", "")
+            sample["pred_label"] = ""
+            sample["main"] = ""
+            sample["score"] = ""
+
+    def update_dataset(self):
+        answer = self.clear_answer()
+        for sample, prediction in zip(self.data_set, answer.split("\n")):
+            print(">", prediction, " ", sample)
+            if prediction.strip() == "":
+                continue
+            result = prediction.strip().split(",")
+            if len(result) != 4:
+                continue
+            try:
+                mainCat = self.main_cover.to_cn(result[1].strip())
+                label = self.label_cover.to_cn(result[2].strip())
+                sample["main"] = mainCat
+                sample["pred_label"] = label
+                sample["score"] = result[3].strip()
+            except Exception as e:
+                print(e)
+                print(">", prediction, " ", sample)
+
+    def sample_error_rate(self):
+        incorrect_count = sum(
+            1 for sample in self.data_set if sample["pred_label"] != sample["label"]
+        )
+        total_count = len(self.data_set)
+        return incorrect_count / total_count
+
+    def show_error(self):
+        self.update_dataset()
+        print(self.sample_error_rate())
+        for sample in self.data_set:
+            if sample["label"] != sample["pred_label"]:
+                print(sample)
+
+    def clear_answer(self):
+        # 删除 answer 中的 'Answer: ', 删除空行
+        return self.respone.content.replace("Answer:", "").strip()
 
 
 if __name__ == "__main__":

@@ -5,34 +5,44 @@ You are a customer service quality inspection expert., sentiment analysis from Q
 Follow the following format.
 
 Question: list of input text
-Answer: 
-    返回格式 "序号,情绪分类,情绪子分类,情绪分类评分" 
-    情绪分类包括 正向,负向,中性
-    情绪子分类包括 ['中性', '惊讶', '感激', '抱怨', '焦急', '生气', '高兴']，
-    情绪子分类评分(0-1.0)。
-    例如 1,负向,抱怨,0.9
-注意：请严格上面的分类来输出，不要输出不在情绪子分类包括中的的分类
-
-Here is an example
+Answer:
+    Return format: a list of "Index, Emotion Category, Emotion Subcategory, Emotion Subcategory Score"
+    Emotion Subcategory Score (0-1.00).
+    Example: 
+        1, pessimistic, complaining, 0.90
+        2, optimistic, happy, 0.75
+Please choose emotion categories and subcategories only from the following options:
+    Emotion categories: ["pessimistic", "optimistic", "neutral"]
+    Emotion subcategories: ['neutral', 'surprised', 'thankful', 'complaining', 'urgent','anxious', 'angry', 'happy']
+    
+Here is some examples
 ---
 
-Question: 好的谢谢!!
-Answer: 1,正向,感激,0.8
-
----
-
-Question: 谢了亲电话打过了
-Answer: 2,正向,感激,0.8
-
----
-
-Question: 我看下都吓我一跳
-Answer: 3,负向,惊讶,0.9
+Question: 
+1: 好的谢谢!!
+Answer:
+1,neutral,thankful,0.85
 
 ---
 
-Question: 哈哈哈哈可以的亲
-Answer: 4,正向,高兴,0.8
+Question:
+1: 谢了亲电话打过了
+Answer:
+1,optimistic,thankful,0.85
+
+---
+
+Question:
+1: 我看下都吓我一跳
+Answer:
+1,pessimistic,surprised,0.90
+
+---
+
+Question:
+1: 哈哈哈哈可以的亲
+Answer:
+1,optimistic,happy,0.80
 
 ---
 
