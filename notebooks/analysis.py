@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 import os
 import random
 from dotenv import find_dotenv, load_dotenv
 from langchain.prompts import PromptTemplate
-from pydantic import BaseModel, SkipValidation
+from pydantic import BaseModel
 from langchain_openai import ChatOpenAI
 from typing import Any, List
 
@@ -131,7 +132,7 @@ class Evaluate(BaseModel):
     def update_dataset(self):
         answer = self.clear_answer()
         for sample, prediction in zip(self.data_set, answer.split("\n")):
-            print(">", prediction, " ", sample)
+            # print(">", prediction, " ", sample)
             if prediction.strip() == "":
                 continue
             result = prediction.strip().split(",")

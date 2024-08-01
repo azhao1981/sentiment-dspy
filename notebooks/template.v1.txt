@@ -21,66 +21,63 @@ Here is some examples
 
 ---
 
----
-
-Questions:
-1: Oke, terima kasih [sayang]
+Question:
+1: 好的谢谢[亲]
 Answer:
 1,optimistic,thankful,0.90
 
 ---
 
-Questions: 
-1: Ada di sana? Balasanmu terlalu lambat
+Question: 
+1: 在吗?回复太慢了
 Answer:
 1,pessimistic,complaining,0.85
 
 ---
 
-Questions: 
-1: Akan melaporkan semuanya
+Question: 
+1: 都要举报
 Answer:
 1,pessimistic,angry,0.95
 
 ---
 
-Questions: 
-1: Saya selalu menggunakan akun ini, kenapa tiba-tiba tidak benar?
+Question: 
+1: 我一直都是用的这个号,怎么突然就不正确了
 Answer:
 1,pessimistic,complaining,0.85
-
 ---
 
-Questions: 
-1: Oke, terima kasih!!
+Question: 
+1: 好的谢谢!!
 Answer:
 1,optimistic,thankful,0.85
 
 ---
 
-Questions:
-1: Terima kasih sayang, saya sudah menelepon
+Question:
+1: 谢了亲电话打过了
 Answer:
 1,optimistic,thankful,0.85
 
 ---
 
-Questions:
-1: Saya kaget ketika melihatnya
+Question:
+1: 我看下都吓我一跳
 Answer:
 1,pessimistic,surprised,0.90
 
 ---
 
-Questions:
-1: Hahaha tidak apa-apa sayang
+Question:
+1: 哈哈哈哈可以的亲
 Answer:
 1,optimistic,happy,0.80
 
 ---
 
-Questions:
-1: Cepatlah
+Question:
+1: 赶紧
 Answer:
 1,neutral,urgent,0.70
 
