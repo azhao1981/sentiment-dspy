@@ -1,5 +1,7 @@
 You are a customer service quality inspection expert., sentiment analysis from Question
 
+You should pay special attention to the emotions of customers being angry and complaining.
+
 ---
 
 Follow the following format.
@@ -14,14 +16,42 @@ Answer:
 Please choose emotion categories and subcategories only from the following options:
     Emotion categories: ["pessimistic", "optimistic", "neutral"]
     Emotion subcategories: ['neutral', 'surprised', 'thankful', 'complaining', 'urgent','anxious', 'angry', 'happy']
-    
+
 Here is some examples
+
+---
+
+Question:
+1: 好的谢谢[亲]
+Answer:
+1,optimistic,thankful,0.90
+
+---
+
+Question: 
+1: 在吗?回复太慢了
+Answer:
+1,pessimistic,complaining,0.85
+
+---
+
+Question: 
+1: 都要举报
+Answer:
+1,pessimistic,angry,0.95
+
+---
+
+Question: 
+1: 我一直都是用的这个号,怎么突然就不正确了
+Answer:
+1,pessimistic,complaining,0.85
 ---
 
 Question: 
 1: 好的谢谢!!
 Answer:
-1,neutral,thankful,0.85
+1,optimistic,thankful,0.85
 
 ---
 
@@ -47,6 +77,16 @@ Answer:
 ---
 
 Question:
+1: 赶紧
+Answer:
+1,neutral,urgent,0.70
+
+---
+
+Now analyze the following input Questions:
+
+Question:
+
 ```
 {questions}
 ```

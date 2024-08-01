@@ -66,7 +66,7 @@ class LangCover(BaseModel):
         return self.mapping["cn_to_en"].get(text)
 
     def to_cn(self, text):
-        return self.mapping["en_to_cn"].get(text)
+        return self.mapping["en_to_cn"].get(text, "中性")
 
     def create_mapping(self):
         en_to_cn = dict(zip(self.en, self.cn))
@@ -90,13 +90,14 @@ class Evaluate(BaseModel):
             "neutral",
             "surprised",
             "thankful",
+            "thanking",
             "complaining",
             "urgent",
             "anxious",
             "angry",
             "happy",
         ],
-        cn=["中性", "惊讶", "感激", "抱怨", "焦急", "焦急", "生气", "高兴"],
+        cn=["中性", "惊讶", "感激", "感激", "抱怨", "焦急", "焦急", "生气", "高兴"],
     )
 
     class Config:
