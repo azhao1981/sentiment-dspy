@@ -21,78 +21,66 @@ Here is some examples
 
 ---
 
-Question:
-1: 好的谢谢[亲]
+---
+
+Questions:
+1: Oke, terima kasih [sayang]
 Answer:
 1,optimistic,thankful,0.90
 
 ---
 
-Question: 
-1: 能帮我加急处理吗,项目上的工人情绪都很大,谢谢
-Reasoning: Urgent handling indicates that the customer wants to resolve the issue as soon as possible, and strong emotions show that the customer is dissatisfied with the current situation.
-Answer:
-1,pessimistic,urgent,0.85
-
----
-
-Question: 
-1: 要向你学习全心全意为人民服务的精神。又快又好
-Answer:
-1,neutral,neutral,0.85
-
----
-
-Question: 
-1: 在吗?回复太慢了
+Questions: 
+1: Ada di sana? Balasanmu terlalu lambat
 Answer:
 1,pessimistic,complaining,0.85
 
 ---
 
-Question: 
-1: 都要举报
+Questions: 
+1: Akan melaporkan semuanya
 Answer:
 1,pessimistic,angry,0.95
 
 ---
 
-Question: 
-1: 我一直都是用的这个号,怎么突然就不正确了
+Questions: 
+1: Saya selalu menggunakan akun ini, kenapa tiba-tiba tidak benar?
 Answer:
 1,pessimistic,complaining,0.85
+
 ---
 
-Question: 
-1: 好的谢谢!!
+Questions: 
+1: Oke, terima kasih!!
 Answer:
 1,optimistic,thankful,0.85
 
 ---
 
-Question:
-1: 谢了亲电话打过了
+Questions:
+1: Terima kasih sayang, saya sudah menelepon
 Answer:
 1,optimistic,thankful,0.85
 
 ---
 
-Question:
-1: 我看下都吓我一跳
+Questions:
+1: Saya kaget ketika melihatnya
 Answer:
 1,pessimistic,surprised,0.90
 
 ---
 
-Question:
-1: 哈哈哈哈可以的亲
+Questions:
+1: Hahaha tidak apa-apa sayang
 Answer:
 1,optimistic,happy,0.80
 
 ---
 
-Question:
-1: 赶紧
+Questions:
+1: Cepatlah
 Answer:
 1,neutral,urgent,0.70
 
@@ -100,10 +88,8 @@ Answer:
 
 Now analyze the following input Questions:
 
-Questions:
+Question:
 
 ```
 {questions}
 ```
-
-Answer:

@@ -34,7 +34,7 @@ class Analysis(BaseModel):
 
     def get_response(self, prompt):
         llm = ChatOpenAI(
-            api_key=self.api_key, base_url=self.base_url, model=self.modelname
+            api_key=self.api_key, base_url=self.base_url, model=self.modelname,max_tokens=4095,
         )
         response = llm.invoke(prompt)
         return response
@@ -82,6 +82,7 @@ class Evaluate(BaseModel):
     respone: Any = ""
     columns: List[Any] = ["label", "text", "pred_label", "main", "score"]
     random: bool = False
+    modelname: str = "glm-4-flash"
     main_cover: LangCover = LangCover(
         en=["pessimistic", "optimistic", "neutral"],
         cn=["负面", "正面", "中性"],
@@ -100,6 +101,10 @@ class Evaluate(BaseModel):
         ],
         cn=["中性", "惊讶", "感激", "感激", "抱怨", "焦急", "焦急", "生气", "高兴"],
     )
+    sub_cover: LangCover = LangCover(
+        en=["中性", "惊讶", "感激", "抱怨", "焦急", "生气", "高兴"],
+        cn=["中性", "中性", "正面", "负面", "负面", "负面", "正面",],
+    )
 
     class Config:
         arbitrary_types_allowed = True
@@ -107,7 +112,7 @@ class Evaluate(BaseModel):
     def do(self):
         self.format_dataset()
         messages = [x.get("text") for x in self.data_set]
-        self.analyer = Analysis(messages=messages)
+        self.analyer = Analysis(messages=messages, modelname=self.modelname)
         self.respone = self.analyer.do()
         return self.clear_answer()
 
@@ -160,6 +165,33 @@ class Evaluate(BaseModel):
         print(self.sample_error_rate())
         for sample in self.data_set:
             if sample["label"] != sample["pred_label"]:
+                print(sample)
+    
+    # 正负相反
+    def is_anti_main_cat(self, label, pred_label):
+        main = self.sub_cover.to_cn(label.strip())
+        if main == "中性":
+            return False
+
+        sentiment_mapping = {
+            "负面": "正面",
+            "正面": "负面"
+        }
+
+        other = self.sub_cover.to_cn(pred_label.strip())
+        return other == sentiment_mapping.get(main, "")
+        
+    def sample_main_error_rate(self):
+        incorrect_count = sum(
+            1 for sample in self.data_set if self.is_anti_main_cat(sample["label"],sample["pred_label"])
+        )
+        total_count = len(self.data_set)
+        return incorrect_count / total_count
+    def show_main_error(self):
+        self.update_dataset()
+        print(self.sample_main_error_rate())
+        for sample in self.data_set:
+            if self.is_anti_main_cat(sample["label"],sample["pred_label"]):
                 print(sample)
 
     def clear_answer(self):

@@ -17,23 +17,23 @@ class TransferLang(BaseModel):
     messages: List[str]
     data_set: List[Any] = []
     lang: str = "印尼语"
-    template: str = "把下面内容翻译成 {lang}: \n{context}"
+    template: str = "Please provide the content you want to be translated into {lang}: \n{context}\n Translation text:"
     api_key: str = api_key
     base_url: str = base_url
     modelname: str = "glm-4-flash"
     response: Any = None
 
     @classmethod
-    def from_dataset(cls, data_set):
+    def from_dataset(cls, data_set,lang="印尼语"):
         messsages = [x.get("text") for x in data_set]
-        return cls(messages=messsages, lang="印尼语", data_set=data_set)
+        return cls(messages=messsages, lang=lang, data_set=data_set)
 
     def msg2context(self):
         context = ""
         for idx, message in enumerate(self.messages):
             if message.startswith("哈哈哈哈哈"):
                 message = "哈哈哈哈"
-            context += f"{idx}: " + message + "\n"
+            context += f"{idx+1}: " + message + "\n"
         return context
 
     def get_response(self, prompt):
@@ -67,7 +67,7 @@ class TransferLang(BaseModel):
             print("No data set")
         text = self.response.content.strip()
         for sample, transferred in zip(self.data_set, text.split("\n")):
-            if transferred:
+            if transferred and not sample.get("source", None):
                 match = re.match(r"^\d+: (.+)", transferred)
                 if match:
                     source = sample.get("text")
