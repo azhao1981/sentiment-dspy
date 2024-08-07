@@ -34,7 +34,10 @@ class Analysis(BaseModel):
 
     def get_response(self, prompt):
         llm = ChatOpenAI(
-            api_key=self.api_key, base_url=self.base_url, model=self.modelname,max_tokens=4095,
+            api_key=self.api_key,
+            base_url=self.base_url,
+            model=self.modelname,
+            max_tokens=4095,
         )
         response = llm.invoke(prompt)
         return response
@@ -103,7 +106,15 @@ class Evaluate(BaseModel):
     )
     sub_cover: LangCover = LangCover(
         en=["中性", "惊讶", "感激", "抱怨", "焦急", "生气", "高兴"],
-        cn=["中性", "中性", "正面", "负面", "负面", "负面", "正面",],
+        cn=[
+            "中性",
+            "中性",
+            "正面",
+            "负面",
+            "负面",
+            "负面",
+            "正面",
+        ],
     )
 
     class Config:
@@ -166,32 +177,32 @@ class Evaluate(BaseModel):
         for sample in self.data_set:
             if sample["label"] != sample["pred_label"]:
                 print(sample)
-    
-    # 正负相反
+
+    # 大类正负相反
     def is_anti_main_cat(self, label, pred_label):
         main = self.sub_cover.to_cn(label.strip())
         if main == "中性":
             return False
 
-        sentiment_mapping = {
-            "负面": "正面",
-            "正面": "负面"
-        }
+        sentiment_mapping = {"负面": "正面", "正面": "负面"}
 
         other = self.sub_cover.to_cn(pred_label.strip())
         return other == sentiment_mapping.get(main, "")
-        
+
     def sample_main_error_rate(self):
         incorrect_count = sum(
-            1 for sample in self.data_set if self.is_anti_main_cat(sample["label"],sample["pred_label"])
+            1
+            for sample in self.data_set
+            if self.is_anti_main_cat(sample["label"], sample["pred_label"])
         )
         total_count = len(self.data_set)
         return incorrect_count / total_count
+
     def show_main_error(self):
         self.update_dataset()
         print(self.sample_main_error_rate())
         for sample in self.data_set:
-            if self.is_anti_main_cat(sample["label"],sample["pred_label"]):
+            if self.is_anti_main_cat(sample["label"], sample["pred_label"]):
                 print(sample)
 
     def clear_answer(self):

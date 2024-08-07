@@ -9,6 +9,10 @@
 git clone ssh://git@git.flyudesk.com:9876/udesk/udesk_robot_notebooks.git
 ```
 
+### 数据集
+
+gz-gpu-01:/mnt/data/liubin/sentiment/mix_model/data/all_raretrible.txt
+
 ### dspy
 
 ```bash
@@ -19,6 +23,26 @@ uv pip install -r .\requrements.txt
 # or
 pip install -r .\requrements.txt
 ```
+
+### sentiment 测试
+
+notebooks/test-in.ipynb   -> glm-4-flash
+notebooks/test-air.ipynb  -> glm-4-air
+notebooks/test-4o-mini.ipynb  -> gpt-4o-mini
+notebooks/analysis.py 
+    Analysis 执行情绪分析
+    Evaluate 评估
+transfer_lang.py
+    TransferLang 简单的样本翻译
+
+### 结论
+
+1 glm-4-flash 对东南亚语言支持不错，
+2 gpt-4o-mini 对东南亚语言支持不好，特别是从中文向泰语等翻译的时候
+3 大类正负情绪上，基本上没有相反的问题
+4 子情绪，中文通过prompt微调，正确率可以到70%左右，人工确认，不正确的，也不错错误.
+    出现比较多的问题是 谢谢和 快点 之类的相反词同时出现，大模型会以感激为先
+5 qwen2 1.5b 不行，简单的情绪分析都不行，会统一回复成 中性
 
 ## 需求范围
 
